@@ -89,11 +89,10 @@ public class PuzzleDAO {
 
             /* get data for new puzzle */
 
-            /*
-
-            INSERT YOUR CODE HERE
-
-            */
+            params.put(daoFactory.getProperty("sql_field_name"), cursor.getString(1));
+            params.put(daoFactory.getProperty("sql_field_description"), cursor.getString(2));
+            params.put(daoFactory.getProperty("sql_field_height"), cursor.getString(3));
+            params.put(daoFactory.getProperty("sql_field_width"), cursor.getString(4));
 
             if (!params.isEmpty())
                 puzzle = new Puzzle(params);
@@ -109,18 +108,14 @@ public class PuzzleDAO {
 
                 do {
 
-                    params = new HashMap<>();
+                    int wordid = cursor.getInt(0);
 
-                    /* get data for the next word in the puzzle */
+                    WordDAO wordDAO = new WordDAO(daoFactory);
 
-                    /*
+                    Word word = wordDAO.find(db, wordid);
 
-                    INSERT YOUR CODE HERE
-
-                    */
-
-                    if (!params.isEmpty())
-                        puzzle.addWordToPuzzle(new Word(params));
+                    if (word != null)
+                        puzzle.addWordToPuzzle(word);
 
                 }
                 while (cursor.moveToNext());
