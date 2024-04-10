@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TabLayoutAdapter extends FragmentStateAdapter {
@@ -16,14 +17,14 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
         super(fragment);
 
         tabs = new ArrayList<>();
+
+        tabs.add(new PuzzleFragment());
+        tabs.add(new ClueFragment());
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-
-        tabs.add(new PuzzleFragment());
-        tabs.add(new ClueFragment());
 
         return tabs.get(position);
     }
@@ -32,5 +33,7 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return NUM_TABS;
     }
+
+    public ArrayList<Fragment> getTabs() { return tabs; }
 
 }

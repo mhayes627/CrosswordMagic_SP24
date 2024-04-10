@@ -17,14 +17,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import java.beans.PropertyChangeEvent;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
-import edu.jsu.mcis.cs408.crosswordmagic.view.AbstractView;
-import edu.jsu.mcis.cs408.crosswordmagic.view.MainActivity;
 
 public class CrosswordGridView extends View implements AbstractView {
 
@@ -63,7 +58,7 @@ public class CrosswordGridView extends View implements AbstractView {
 
         controller.addView(this);
 
-        controller.getGridDimensions();
+        controller.getGridDimension();
         controller.getGridLetters();
         controller.getGridNumbers();
 
@@ -190,7 +185,7 @@ public class CrosswordGridView extends View implements AbstractView {
 
             // draw grid lines (horizontal)
 
-            for (int i = 1; i < gridWidth; ++i) {
+            for (int i = 1; i < gridHeight; ++i) {
                 canvas.drawLine(xBegin, ((i * squareHeight) + yBegin), xEnd, ((i * squareHeight) + yBegin), gridPaint);
             }
 
@@ -244,8 +239,6 @@ public class CrosswordGridView extends View implements AbstractView {
 
                 this.letters = (Character[][]) value;
 
-                invalidate();
-
             }
 
         }
@@ -255,8 +248,6 @@ public class CrosswordGridView extends View implements AbstractView {
             if (value instanceof Integer[][]) {
 
                 this.numbers = (Integer[][]) value;
-
-                invalidate();
 
             }
 
@@ -271,11 +262,11 @@ public class CrosswordGridView extends View implements AbstractView {
                 this.gridHeight = dimension[0];
                 this.gridWidth = dimension[1];
 
-                invalidate();
-
             }
 
         }
+
+        invalidate();
 
     }
 

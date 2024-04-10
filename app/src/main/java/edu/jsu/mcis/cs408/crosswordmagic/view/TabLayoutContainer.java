@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 
-
 public class TabLayoutContainer extends Fragment {
 
     private TabContainerBinding binding;
@@ -42,14 +41,13 @@ public class TabLayoutContainer extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                switch (position){
-                    case 0:
-                        tab.setText("Puzzle");
-                        break;
-                    case 1:
-                        tab.setText("Clues");
-                        break;
+                if (tabLayoutAdapter.getTabs().get(position) instanceof PuzzleFragment){
+                    tab.setText("Puzzle");
                 }
+                if (tabLayoutAdapter.getTabs().get(position) instanceof ClueFragment){
+                    tab.setText("Clues");
+                }
+
             }
         }).attach();
 
