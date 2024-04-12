@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.beans.PropertyChangeEvent;
 
+import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 import edu.jsu.mcis.cs408.crosswordmagic.databinding.ActivityMainBinding;
 import edu.jsu.mcis.cs408.crosswordmagic.model.CrosswordMagicModel;
@@ -47,6 +49,22 @@ public class MainActivity extends AppCompatActivity implements AbstractView {
     @Override
     public void modelPropertyChange(final PropertyChangeEvent evt) {
 
+        String name = evt.getPropertyName();
+        Object value = evt.getNewValue();
+
+        if(name.equals(CrosswordMagicController.GUESS_PROPERTY)){
+            String message;
+
+            if (value != null){
+                message = getResources().getString(R.string.right_guess);
+            }
+            else{
+                message = getResources().getString(R.string.wrong_guess);
+            }
+
+            Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
     }
 

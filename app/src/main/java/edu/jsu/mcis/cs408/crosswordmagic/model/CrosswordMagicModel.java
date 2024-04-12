@@ -1,7 +1,6 @@
 package edu.jsu.mcis.cs408.crosswordmagic.model;
 
 import android.content.Context;
-import android.util.Log;
 
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 import edu.jsu.mcis.cs408.crosswordmagic.model.dao.DAOFactory;
@@ -45,6 +44,17 @@ public class CrosswordMagicModel extends AbstractModel {
 
     public void getCluesDown() {
         firePropertyChange(CrosswordMagicController.CLUE_DOWN_PROPERTY, null, puzzle.getCluesDown());
+    }
+
+    public void setGuess(String guessKey) {
+
+        String[] guess = guessKey.split(" ");
+
+        int box = Integer.parseInt(guess[0]);
+        WordDirection wd = puzzle.checkGuess(box, guess[1]);
+
+        firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, wd);
+
     }
 
 }

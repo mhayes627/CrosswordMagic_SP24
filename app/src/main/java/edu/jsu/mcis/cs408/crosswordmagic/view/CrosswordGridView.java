@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import java.beans.PropertyChangeEvent;
 import java.util.Locale;
 
+import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 
 public class CrosswordGridView extends View implements AbstractView {
@@ -301,6 +302,8 @@ public class CrosswordGridView extends View implements AbstractView {
                     String text = String.format(Locale.getDefault(),"X: %d, Y: %d, Box: %d", x, y, n);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(R.string.dialog_title);
+                    builder.setMessage(R.string.dialog_message);
                     final EditText input = new EditText(context);
                     input.setInputType(InputType.TYPE_CLASS_TEXT);
                     builder.setView(input);
@@ -308,6 +311,8 @@ public class CrosswordGridView extends View implements AbstractView {
                         @Override
                         public void onClick(DialogInterface d, int i) {
                             userInput = input.getText().toString();
+                            String guess = n + " " + userInput.toUpperCase();
+                            controller.setGuess(guess);
                         }
                     });
                     builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -317,7 +322,7 @@ public class CrosswordGridView extends View implements AbstractView {
                             d.cancel();
                         }
                     });
-                    AlertDialog aboutDialog = builder.show();
+                    builder.show();
                 }
 
             }

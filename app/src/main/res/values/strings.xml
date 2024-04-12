@@ -4,4 +4,6 @@
     <string name="clue_header_down">Down</string>
     <string name="dialog_title">Enter Your Guess</string>
     <string name="dialog_message">Enter your guess and select GUESS</string>
+    <string name="right_guess">Congratulations, you guessed correctly!</string>
+    <string name="wrong_guess">Sorry! You guessed the word wrong</string>
 </resources>
