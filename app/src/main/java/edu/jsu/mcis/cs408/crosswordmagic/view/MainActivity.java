@@ -13,6 +13,7 @@ import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 import edu.jsu.mcis.cs408.crosswordmagic.databinding.ActivityMainBinding;
 import edu.jsu.mcis.cs408.crosswordmagic.model.CrosswordMagicModel;
+import edu.jsu.mcis.cs408.crosswordmagic.model.WordDirection;
 
 public class MainActivity extends AppCompatActivity implements AbstractView {
 
@@ -52,16 +53,16 @@ public class MainActivity extends AppCompatActivity implements AbstractView {
         String name = evt.getPropertyName();
         Object value = evt.getNewValue();
 
-        if(name.equals(CrosswordMagicController.GUESS_PROPERTY)){
-            String message;
+        String message;
 
-            if (value != null){
-                message = getResources().getString(R.string.right_guess);
-            }
-            else{
+        if(name.equals(CrosswordMagicController.GUESS_PROPERTY)){
+
+            if (!(value instanceof WordDirection)) {
                 message = getResources().getString(R.string.wrong_guess);
             }
-
+            else {
+                message = getResources().getString(R.string.right_guess);
+            }
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
             toast.show();
         }

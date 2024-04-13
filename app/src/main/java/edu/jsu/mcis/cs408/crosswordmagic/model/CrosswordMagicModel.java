@@ -62,8 +62,6 @@ public class CrosswordMagicModel extends AbstractModel {
 
         if (direction != null){
 
-            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, direction);
-
             HashMap<String, String> params = new HashMap<>();
 
             String wordKey = box + direction.toString();
@@ -75,6 +73,11 @@ public class CrosswordMagicModel extends AbstractModel {
             params.put(daoFactory.getProperty("sql_field_wordid"), wordid);
 
             guessDAO.create(params);
+
+            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, direction);
+        }
+        else {
+            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, false);
         }
 
     }
