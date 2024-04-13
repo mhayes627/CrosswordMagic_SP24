@@ -13,7 +13,6 @@ import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 import edu.jsu.mcis.cs408.crosswordmagic.databinding.ActivityMainBinding;
 import edu.jsu.mcis.cs408.crosswordmagic.model.CrosswordMagicModel;
-import edu.jsu.mcis.cs408.crosswordmagic.model.WordDirection;
 
 public class MainActivity extends AppCompatActivity implements AbstractView {
 
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements AbstractView {
 
         if(name.equals(CrosswordMagicController.GUESS_PROPERTY)){
 
-            if (!(value instanceof WordDirection)) {
+            if (value.toString().isEmpty()) {
                 message = getResources().getString(R.string.wrong_guess);
             }
             else {

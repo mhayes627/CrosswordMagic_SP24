@@ -77,7 +77,7 @@ public class CrosswordMagicModel extends AbstractModel {
             firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, direction);
         }
         else {
-            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, false);
+            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, "");
         }
 
     }
