@@ -1,9 +1,13 @@
 package edu.jsu.mcis.cs408.crosswordmagic.model;
 
 import android.content.Context;
+import android.util.Log;
+
+import java.util.HashMap;
 
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 import edu.jsu.mcis.cs408.crosswordmagic.model.dao.DAOFactory;
+import edu.jsu.mcis.cs408.crosswordmagic.model.dao.GuessDAO;
 import edu.jsu.mcis.cs408.crosswordmagic.model.dao.PuzzleDAO;
 
 public class CrosswordMagicModel extends AbstractModel {
@@ -11,11 +15,14 @@ public class CrosswordMagicModel extends AbstractModel {
     private final int DEFAULT_PUZZLE_ID = 1;
 
     private Puzzle puzzle;
+    GuessDAO guessDAO;
+    DAOFactory daoFactory;
 
     public CrosswordMagicModel(Context context) {
 
-        DAOFactory daoFactory = new DAOFactory(context);
+        daoFactory = new DAOFactory(context);
         PuzzleDAO puzzleDAO = daoFactory.getPuzzleDAO();
+        guessDAO = daoFactory.getGuessDAO();
 
         this.puzzle = puzzleDAO.find(DEFAULT_PUZZLE_ID);
 
@@ -51,9 +58,24 @@ public class CrosswordMagicModel extends AbstractModel {
         String[] guess = guessKey.split(" ");
 
         int box = Integer.parseInt(guess[0]);
-        WordDirection wd = puzzle.checkGuess(box, guess[1]);
+        WordDirection direction = puzzle.checkGuess(box, guess[1]);
 
-        firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, wd);
+        if (direction != null){
+
+            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, direction);
+
+            HashMap<String, String> params = new HashMap<>();
+
+            String wordKey = box + direction.toString();
+
+            String puzzleid = String.valueOf(DEFAULT_PUZZLE_ID);
+            String wordid = puzzle.getWord(wordKey).getId().toString();
+
+            params.put(daoFactory.getProperty("sql_field_puzzleid"), puzzleid);
+            params.put(daoFactory.getProperty("sql_field_wordid"), wordid);
+
+            guessDAO.create(params);
+        }
 
     }
 
