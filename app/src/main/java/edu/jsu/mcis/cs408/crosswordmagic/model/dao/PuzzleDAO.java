@@ -4,8 +4,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import edu.jsu.mcis.cs408.crosswordmagic.model.Puzzle;
+import edu.jsu.mcis.cs408.crosswordmagic.model.PuzzleListItem;
 import edu.jsu.mcis.cs408.crosswordmagic.model.Word;
 import edu.jsu.mcis.cs408.crosswordmagic.model.WordDirection;
 
@@ -140,6 +143,45 @@ public class PuzzleDAO {
 
         return puzzle;
 
+    }
+
+    public PuzzleListItem[] list() {
+
+        /* use this method if there is NOT already a SQLiteDatabase open */
+
+        SQLiteDatabase db = daoFactory.getWritableDatabase();
+        PuzzleListItem[] result = list(db);
+        db.close();
+        return result;
+
+    }
+
+    public PuzzleListItem[] list(SQLiteDatabase db) {
+        ArrayList<PuzzleListItem> puzzles = new ArrayList<>();
+
+        String query = daoFactory.getProperty("sql_get_puzzles");
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+
+            cursor.moveToFirst();
+            do {
+
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+
+                PuzzleListItem puzzle = new PuzzleListItem(id, name);
+
+                puzzles.add(puzzle);
+
+            }
+            while (cursor.moveToNext());
+
+            cursor.close();
+
+        }
+
+        return puzzles.toArray(new PuzzleListItem[]{});
     }
 
 }

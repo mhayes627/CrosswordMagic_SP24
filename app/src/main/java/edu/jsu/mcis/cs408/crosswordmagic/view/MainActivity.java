@@ -16,7 +16,6 @@ import edu.jsu.mcis.cs408.crosswordmagic.model.CrosswordMagicModel;
 
 public class MainActivity extends AppCompatActivity implements AbstractView {
 
-
     private final String TAG = "MainActivity";
 
     private ActivityMainBinding binding;
@@ -35,7 +34,14 @@ public class MainActivity extends AppCompatActivity implements AbstractView {
 
         controller = new CrosswordMagicController();
 
-        CrosswordMagicModel model = new CrosswordMagicModel(this);
+        Integer puzzleid = 0;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            puzzleid = extras.getInt("puzzleid");
+        }
+
+        CrosswordMagicModel model = new CrosswordMagicModel(this, puzzleid);
 
         /* Register View(s) and Model(s) with Controller */
 

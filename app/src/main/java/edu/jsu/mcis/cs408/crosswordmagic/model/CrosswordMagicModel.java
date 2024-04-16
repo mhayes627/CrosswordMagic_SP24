@@ -3,6 +3,8 @@ package edu.jsu.mcis.cs408.crosswordmagic.model;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.android.material.tabs.TabLayout;
+
 import java.util.HashMap;
 
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
@@ -12,19 +14,21 @@ import edu.jsu.mcis.cs408.crosswordmagic.model.dao.PuzzleDAO;
 
 public class CrosswordMagicModel extends AbstractModel {
 
-    private final int DEFAULT_PUZZLE_ID = 1;
-
     private Puzzle puzzle;
+    PuzzleDAO puzzleDAO;
     GuessDAO guessDAO;
     DAOFactory daoFactory;
+    int puzzleid;
 
-    public CrosswordMagicModel(Context context) {
+    public CrosswordMagicModel(Context context, int puzzleid) {
 
         daoFactory = new DAOFactory(context);
-        PuzzleDAO puzzleDAO = daoFactory.getPuzzleDAO();
+        puzzleDAO = daoFactory.getPuzzleDAO();
         guessDAO = daoFactory.getGuessDAO();
 
-        this.puzzle = puzzleDAO.find(DEFAULT_PUZZLE_ID);
+        this.puzzleid = puzzleid;
+
+        this.puzzle = puzzleDAO.find(this.puzzleid);
 
     }
 
@@ -53,6 +57,12 @@ public class CrosswordMagicModel extends AbstractModel {
         firePropertyChange(CrosswordMagicController.CLUE_DOWN_PROPERTY, null, puzzle.getCluesDown());
     }
 
+    public void getPuzzleList() {
+        PuzzleListItem[] list = puzzleDAO.list();
+
+        firePropertyChange(CrosswordMagicController.PUZZLE_LIST_PROPERTY, null, list);
+    }
+
     public void setGuess(String guessKey) {
 
         String[] guess = guessKey.split(" ");
@@ -66,7 +76,7 @@ public class CrosswordMagicModel extends AbstractModel {
 
             String wordKey = box + direction.toString();
 
-            String puzzleid = String.valueOf(DEFAULT_PUZZLE_ID);
+            String puzzleid = String.valueOf(this.puzzleid);
             String wordid = puzzle.getWord(wordKey).getId().toString();
 
             params.put(daoFactory.getProperty("sql_field_puzzleid"), puzzleid);

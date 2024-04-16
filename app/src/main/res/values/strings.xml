@@ -6,4 +6,6 @@
     <string name="dialog_message">Enter your guess and select GUESS</string>
     <string name="right_guess">Congratulations, you guessed correctly!</string>
     <string name="wrong_guess">Sorry! You guessed the word wrong</string>
+    <string name="button_play">Play Puzzle</string>
+    <string name="crossword_magic_cover">Crossword Magic</string>
 </resources>
