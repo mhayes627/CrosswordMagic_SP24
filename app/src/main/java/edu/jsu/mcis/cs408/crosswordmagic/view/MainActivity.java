@@ -58,16 +58,10 @@ public class MainActivity extends AppCompatActivity implements AbstractView {
         String name = evt.getPropertyName();
         Object value = evt.getNewValue();
 
-        String message;
-
         if(name.equals(CrosswordMagicController.GUESS_PROPERTY)){
 
-            if (value.toString().isEmpty()) {
-                message = getResources().getString(R.string.wrong_guess);
-            }
-            else {
-                message = getResources().getString(R.string.right_guess);
-            }
+            String message = getResources().getString((Integer) value);
+
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
             toast.show();
         }

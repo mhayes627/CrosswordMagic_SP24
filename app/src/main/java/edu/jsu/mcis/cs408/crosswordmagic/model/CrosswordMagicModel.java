@@ -7,6 +7,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.HashMap;
 
+import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 import edu.jsu.mcis.cs408.crosswordmagic.model.dao.DAOFactory;
 import edu.jsu.mcis.cs408.crosswordmagic.model.dao.GuessDAO;
@@ -84,10 +85,10 @@ public class CrosswordMagicModel extends AbstractModel {
 
             guessDAO.create(params);
 
-            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, direction);
+            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, R.string.right_guess);
         }
         else {
-            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, "");
+            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, R.string.wrong_guess);
         }
 
     }
